@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="550.0" prefWidth="910.0" style="-fx-background-color: #649487;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.aplicaciondiccionario.PantallaUsuarioController">
+   <children>
+      <ComboBox fx:id="comoBoxBuscador" editable="true" layoutX="33.0" layoutY="55.0" prefHeight="20.0" prefWidth="260.0" promptText="Buscar en diccionario" style="-fx-background-color: #86A389; -fx-border-radius: 20; -fx-cursor: hand;" />
+      <Label layoutX="33.0" layoutY="21.0" prefHeight="17.0" prefWidth="260.0" text="Diccionario" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="28.0" fitWidth="34.0" layoutX="307.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/59cfc4d2d3b1936210a5ddc7.png" />
+         </image>
+      </ImageView>
+      <ListView fx:id="listaPalabras1" layoutX="33.0" layoutY="228.0" prefHeight="296.0" prefWidth="175.0" style="-fx-background-color: #87A164;" />
+      <ListView fx:id="listaPalabras2" layoutX="264.0" layoutY="228.0" prefHeight="296.0" prefWidth="175.0" style="-fx-background-color: #87A164;" />
+      <ListView fx:id="listaPalabras3" layoutX="491.0" layoutY="61.0" prefHeight="463.0" prefWidth="175.0" style="-fx-background-color: #87A164;" />
+      <Label alignment="CENTER" layoutX="33.0" layoutY="191.0" prefHeight="17.0" prefWidth="175.0" text="A" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="264.0" layoutY="191.0" prefHeight="17.0" prefWidth="175.0" text="B" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="491.0" layoutY="27.0" prefHeight="17.0" prefWidth="175.0" text="C" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
