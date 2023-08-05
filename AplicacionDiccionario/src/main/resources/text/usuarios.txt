@@ -1,3 +1,0 @@
-Usuario,Contrasena
-savier,123456789
-juan,123456
