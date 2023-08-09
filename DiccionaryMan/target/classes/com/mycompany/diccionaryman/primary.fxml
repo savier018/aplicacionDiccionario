@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-
 
 <AnchorPane prefHeight="199.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.diccionaryman.PrimaryController">
    <children>
-      <VBox alignment="CENTER" layoutX="25.0" layoutY="24.0" prefHeight="152.0" prefWidth="308.0" spacing="20.0">
-         <children>
-            <Label text="Diccionary" />
-            <Button fx:id="primaryButton" onAction="#switchToSecondary" text="Click here to Insert Dicc" />
-         </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </VBox>
+      <Label fx:id="Title" layoutX="140.0" layoutY="46.0" text="Default" />
+      <Button fx:id="InsertButton" layoutX="89.0" layoutY="75.0" onAction="#insertarTxt" text="Click here to Insert Dicc" />
+      <Button fx:id="seguirbtn" layoutX="262.0" layoutY="136.0" onAction="#switchToSecondary">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="27.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../imagenes/gui/arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="defaultbtn" layoutX="132.0" layoutY="124.0" onAction="#returndefault" text="Default" />
    </children>
 </AnchorPane>

@@ -48,6 +48,21 @@ public class Palabra {
         return listaPalabras;
     }
     
+    public static ArrayList<Palabra> cargarPalabras(String txt){
+        ArrayList<Palabra> listaPalabras = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(String.format("src/main/resources/text/%s.txt",txt)));){
+            br.readLine();
+            String linea;
+            while ((linea = br.readLine()) != null){
+                String[] datos = linea.split("-"); 
+                listaPalabras.add(new Palabra(datos[0], datos[1]));
+            }
+        } catch (IOException e){
+            System.out.println(e);
+        }
+        return listaPalabras;
+    }
+    
     public static Map<Character, ArrayList<Palabra>> sublistasPorLetra(ArrayList<Palabra> lista){
         Map<Character, ArrayList<Palabra>> mapaPalabra = new HashMap<>();
         for (Palabra p : lista){

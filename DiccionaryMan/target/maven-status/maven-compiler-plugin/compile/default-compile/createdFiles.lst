@@ -1,6 +1,5 @@
-com\mycompany\diccionaryman\PrimaryController.class
-com\mycompany\diccionaryman\AutoCompleteTextField.class
-com\mycompany\diccionaryman\Palabra.class
 TDA\TrieNode.class
-module-info.class
 com\mycompany\diccionaryman\App.class
+com\mycompany\diccionaryman\PrimaryController.class
+com\mycompany\diccionaryman\Palabra.class
+module-info.class

@@ -52,53 +52,55 @@ public class SecondaryController implements Initializable {
     }
     
     private void loadTree(){
-    ArrayList<Palabra> lp= Palabra.cargarPalabras();
-    Tree= new ArbolTrie();
-    for(Palabra p:lp){
-    Tree.insert(p.getTermino());
-        System.out.println(Tree.toString());
-    }  
+        ArrayList<Palabra> lp= Palabra.cargarPalabras();
+        Tree= new ArbolTrie();
+        for(Palabra p:lp){
+            Tree.insert(p.getTermino());
+            System.out.println(Tree.toString());
+        }  
     }
     
+    
+    
     private void updateList(){   
-    ArrayList<Palabra> lp= new ArrayList();
-    String f =TextInput.getText();
-    System.out.println(f);
-    Tree.collectWordsWithPrefix(Tree.getTrieNodeWithPrefix(f), f,lp);
-    for(Palabra p:lp){
-        System.out.println(p.getTermino());
-    } 
-    listaPalabras=lp;
-    auto.dispose();
-    auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
-    System.out.println(listaPalabras.toString());
+        ArrayList<Palabra> lp= new ArrayList();
+        String f =TextInput.getText();
+        System.out.println(f);
+        Tree.collectWordsWithPrefix(Tree.getTrieNodeWithPrefix(f), f,lp);
+        for(Palabra p:lp){
+            System.out.println(p.getTermino());
+        } 
+        listaPalabras=lp;
+        auto.dispose();
+        auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
+        System.out.println(listaPalabras.toString());
     }
     
     //Button Commands;
     @FXML
     private void changeModeSearch(){
-    Mode.setText("Mode: Search");
-    TextFieldContainer.getChildren().clear();
-    SearchMeaning = new Button("Get Meaning");
-    TextFieldContainer.getChildren().addAll(LegendText,TextInput,SearchMeaning);
+        Mode.setText("Mode: Search");
+        TextFieldContainer.getChildren().clear();
+        SearchMeaning = new Button("Get Meaning");
+        TextFieldContainer.getChildren().addAll(LegendText,TextInput,SearchMeaning);
     
     
     }
     @FXML
     private void changeModeDelete(){
-    Mode.setText("Mode: Delete");
-    TextFieldContainer.getChildren().clear();
-    Confirm = new Button("Confirm");
-    TextFieldContainer.getChildren().addAll(LegendText,TextInput,Confirm);
+        Mode.setText("Mode: Delete");
+        TextFieldContainer.getChildren().clear();
+        Confirm = new Button("Confirm");
+        TextFieldContainer.getChildren().addAll(LegendText,TextInput,Confirm);
     
     }
     
     @FXML
     private void changeModeAdd(){
-    Mode.setText("Mode: Add");
-    TextFieldContainer.getChildren().clear();
-    AddtoList = new Button("Add to List");
-    TextFieldContainer.getChildren().addAll(LegendText,TextInput,MeaningText,MeaningInput,AddtoList);
+        Mode.setText("Mode: Add");
+        TextFieldContainer.getChildren().clear();
+        AddtoList = new Button("Add to List");
+        TextFieldContainer.getChildren().addAll(LegendText,TextInput,MeaningText,MeaningInput,AddtoList);
     
     }
     
@@ -125,8 +127,8 @@ public class SecondaryController implements Initializable {
     
     //Save Button Methods
     @FXML
-    private void saveTXT(){
-    
+    private void saveWordToTXT(){
+        
     }
     
     @FXML
