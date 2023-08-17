@@ -1,6 +1,7 @@
 package com.mycompany.diccionaryman;
 
 import TDA.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,13 +11,16 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -26,6 +30,11 @@ public class SecondaryController implements Initializable {
     @FXML
     private Label Title;
     @FXML
+    private Label DiccionaryTitle;
+    
+    private static String DiccionaryString;
+    
+    @FXML
     private VBox TextFieldContainer;
     @FXML
     private GridPane ButtonMenu;
@@ -34,13 +43,14 @@ public class SecondaryController implements Initializable {
     @FXML
     private TextField TextInput, MeaningInput;
     @FXML
-    private Button Add,Delete,Search,Save,Stats,Game,Confirm,SearchMeaning, AddtoList;        
+    private Button Add,Delete,Search,Save,Stats,Game,Confirm,SearchMeaning, AddtoList,Download;        
     
     private static ArrayList<Palabra> listaPalabras = new ArrayList();
     private static ArbolTrie Tree;    
     private AutoCompletionBinding auto;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        DiccionaryTitle.setText(DiccionaryString);
         auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
         loadTree();
         TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -135,4 +145,22 @@ public class SecondaryController implements Initializable {
     private void switchToPrimary() throws IOException {
         App.setRoot("primary");
     }
+    
+    public static void setDiccionaryTitle(String title){
+        DiccionaryString = title;
+    }
+    
+    @FXML
+    private void downloadLibrary() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Desea descargar el archivo?");
+        if(alert.showAndWait().get() == ButtonType.OK){
+            String home = System.getProperty("user.home");
+            File file = new File(home+"Downloads"+DiccionaryString+".txt");
+        }    
+        
+        alert.close();
+        
+    }
+    
 }
