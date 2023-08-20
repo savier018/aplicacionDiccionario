@@ -33,6 +33,7 @@ public class SecondaryController implements Initializable {
     private Label DiccionaryTitle;
     
     private static String DiccionaryString;
+    private String WritableStats;
     
     @FXML
     private VBox TextFieldContainer;
@@ -51,14 +52,7 @@ public class SecondaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DiccionaryTitle.setText(DiccionaryString);
-        auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
         loadTree();
-        TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent t) {
-            updateList();
-        }
-    });
     }
     
     private void loadTree(){
@@ -70,9 +64,22 @@ public class SecondaryController implements Initializable {
         }  
     }
     
+//Cambie el boton descargar, puse su metodo en el boton Save. Ya que ese era su trabajo.
+    /*
+    Implementar codigo para que se agrege al trie la palabra, para que busque su significado,borrar la palabra del trie, obtener stats del Trie.
+    Poner Gif, background y hacer bonito el css.
+    */
+    
+    private String getStats(){
+    String l="";
     
     
-    private void updateList(){   
+    
+    return l;
+    }
+    
+    
+    private void updateObservableList(){   
         ArrayList<Palabra> lp= new ArrayList();
         String f =TextInput.getText();
         System.out.println(f);
@@ -89,56 +96,102 @@ public class SecondaryController implements Initializable {
     //Button Commands;
     @FXML
     private void changeModeSearch(){
+        if(auto!=null){
+        auto.dispose();
+        }
         Mode.setText("Mode: Search");
         TextFieldContainer.getChildren().clear();
         SearchMeaning = new Button("Get Meaning");
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,SearchMeaning);
+        auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
+        TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent t) {
+            updateObservableList();
+        }
+    });
     
     
     }
     @FXML
     private void changeModeDelete(){
+        if(auto!=null){
+        auto.dispose();
+        }
         Mode.setText("Mode: Delete");
         TextFieldContainer.getChildren().clear();
         Confirm = new Button("Confirm");
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,Confirm);
-    
+        auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
+        TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent t) {
+            updateObservableList();
+        }
+    });
     }
     
     @FXML
     private void changeModeAdd(){
+        if(auto!=null){
+        auto.dispose();
+        }
         Mode.setText("Mode: Add");
         TextFieldContainer.getChildren().clear();
         AddtoList = new Button("Add to List");
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,MeaningText,MeaningInput,AddtoList);
-    
+        auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
+        TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent t) {
+            updateObservableList();
+        }
+    });
     }
     
     @FXML
-    private void changeModeSave(){}
+    private void downloadLibrary() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Desea descargar el archivo?");
+        if(alert.showAndWait().get() == ButtonType.OK){
+            String home = System.getProperty("user.home");
+            File file = new File(home+"Downloads"+DiccionaryString+".txt");
+            
+        }    
+        
+        alert.close();
+        
+    }
+    
+    
     
     @FXML
-    private void giveStats(){}
+    private void giveStats(){
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Stats!");
+    alert.setContentText(getStats());
+    if(alert.showAndWait().get() == ButtonType.OK){
+        alert.close();
+        }      
+    }
     
     @FXML
     private void changeModeGame(){
     
     }
     
-    
-    
-    
+
     
     @FXML
-    private void updateListViaInput(){
-    
+    private void addToList(){
+    String f= TextInput.getText();
+    Tree.insert(f);
     }
     
-    
-    //Save Button Methods
     @FXML
-    private void saveWordToTXT(){
-        
+    private void getMeaning(){
+    
+    
     }
     
     @FXML
@@ -150,17 +203,5 @@ public class SecondaryController implements Initializable {
         DiccionaryString = title;
     }
     
-    @FXML
-    private void downloadLibrary() throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Desea descargar el archivo?");
-        if(alert.showAndWait().get() == ButtonType.OK){
-            String home = System.getProperty("user.home");
-            File file = new File(home+"Downloads"+DiccionaryString+".txt");
-        }    
-        
-        alert.close();
-        
-    }
     
 }

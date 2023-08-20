@@ -1,0 +1,32 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 18 ago. 2023, 17:37:53
+    Author     : Win1OPro Station
+*/
+
+
+
+.mainFxmlClass{
+   -fx-background-image: url("background.gif");
+   -fx-background-size: 100% 100%;
+   -fx-background-repeat: no-repeat;
+   -fx-background-position: center center;
+    
+}
+
+.Button{
+  -fx-background-color: #2a135b;
+  -fx-display: flex;
+  -fx-align-content: center;
+  -fx-text-align: center;
+  -fx-text-fill: white;
+  -fx-font-family: 'Lucida Console', cursive;
+}
+
+.Label{
+    -fx-font-family: 'Lucida Console', cursive;
+    -fx-text-fill: white;
+}
