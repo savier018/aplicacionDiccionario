@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -123,6 +124,31 @@ public class SecondaryController implements Initializable {
     
     
     }
+    
+//    @FXML
+//    private void changeModeDelete(){
+//        if(auto!=null){
+//        auto.dispose();
+//        }
+//        Mode.setText("Mode: Delete");
+//        TextFieldContainer.getChildren().clear();
+//        Confirm = new Button("Confirm");
+//        Confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//        @Override
+//        public void handle(MouseEvent t) {
+//            DeleteWord();
+//        }
+//    });
+//        TextFieldContainer.getChildren().addAll(LegendText,TextInput,Confirm);
+//        auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
+//        TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//        @Override
+//        public void handle(KeyEvent t) {
+//            updateObservableList();
+//        }
+//    });
+//    }
+    
     @FXML
     private void changeModeDelete(){
         if(auto!=null){
@@ -131,12 +157,6 @@ public class SecondaryController implements Initializable {
         Mode.setText("Mode: Delete");
         TextFieldContainer.getChildren().clear();
         Confirm = new Button("Confirm");
-        Confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent t) {
-            DeleteWord();
-        }
-    });
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,Confirm);
         auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
         TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -144,8 +164,31 @@ public class SecondaryController implements Initializable {
         public void handle(KeyEvent t) {
             updateObservableList();
         }
-    });
+        });
+        
+        Confirm.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                handleDelete(); 
+            }
+        });
     }
+      
+    @FXML
+    private void handleDelete() {
+        if (Tree == null) {
+            return;
+        }
+
+        String palabraAEliminar = TextInput.getText();
+        if (Tree.search(palabraAEliminar)) {
+            Tree.delete(palabraAEliminar);
+            TextInput.clear();
+        } else {
+            System.out.println("La palabra no existe en el diccionario.");
+        }
+    }
+
     
     @FXML
     private void changeModeAdd(){
