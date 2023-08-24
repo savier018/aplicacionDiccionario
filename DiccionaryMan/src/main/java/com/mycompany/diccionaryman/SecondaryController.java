@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -47,6 +49,7 @@ public class SecondaryController implements Initializable {
     private Button Add,Delete,Search,Save,Stats,Game,Confirm,SearchMeaning, AddtoList,Download;        
     
     private static ArrayList<Palabra> listaPalabras = new ArrayList();
+    private static Map<String,String> SigP = new HashMap();
     private static ArbolTrie Tree;    
     private AutoCompletionBinding auto;
     @Override
@@ -56,11 +59,11 @@ public class SecondaryController implements Initializable {
     }
     
     private void loadTree(){
-        ArrayList<Palabra> lp= Palabra.cargarPalabras();
+        listaPalabras = Palabra.cargarPalabras();
         Tree= new ArbolTrie();
-        for(Palabra p:lp){
+        for(Palabra p:listaPalabras){
             Tree.insert(p.getTermino());
-            System.out.println(Tree.toString());
+            SigP.put(p.getTermino(),p.getDefinicion());
         }  
     }
     
@@ -70,22 +73,23 @@ public class SecondaryController implements Initializable {
     Poner Gif, background y hacer bonito el css.
     */
     
-    private String getStats(){
-    String l="";
-    
-    
-    
-    return l;
+    private ArrayList<String> getStats(){
+    ArrayList<String> allStats = new ArrayList();
+    int l= Tree.countWordsinTrie();
+    int li= Tree.getHeight();
+    allStats.add("Words in the Trie: " +l);
+    allStats.add("Height of Trie: " + li);
+    return allStats;
     }
     
     
-    private void updateObservableList(){   
+    private void updateObservableList(){
         ArrayList<Palabra> lp= new ArrayList();
         String f =TextInput.getText();
         System.out.println(f);
         Tree.collectWordsWithPrefix(Tree.getTrieNodeWithPrefix(f), f,lp);
         for(Palabra p:lp){
-            System.out.println(p.getTermino());
+            System.out.println(p.getTermino()+""+p.getDefinicion());
         } 
         listaPalabras=lp;
         auto.dispose();
@@ -102,6 +106,12 @@ public class SecondaryController implements Initializable {
         Mode.setText("Mode: Search");
         TextFieldContainer.getChildren().clear();
         SearchMeaning = new Button("Get Meaning");
+        SearchMeaning.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent t) {
+            getMeaning();
+        }
+    });
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,SearchMeaning);
         auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
         TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -121,6 +131,12 @@ public class SecondaryController implements Initializable {
         Mode.setText("Mode: Delete");
         TextFieldContainer.getChildren().clear();
         Confirm = new Button("Confirm");
+        Confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent t) {
+            DeleteWord();
+        }
+    });
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,Confirm);
         auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
         TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -139,6 +155,12 @@ public class SecondaryController implements Initializable {
         Mode.setText("Mode: Add");
         TextFieldContainer.getChildren().clear();
         AddtoList = new Button("Add to List");
+        AddtoList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent t) {
+            addWord();
+        }
+    });
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,MeaningText,MeaningInput,AddtoList);
         auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
         TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -158,7 +180,6 @@ public class SecondaryController implements Initializable {
             File file = new File(home+"Downloads"+DiccionaryString+".txt");
             
         }    
-        
         alert.close();
         
     }
@@ -169,7 +190,12 @@ public class SecondaryController implements Initializable {
     private void giveStats(){
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Stats!");
-    alert.setContentText(getStats());
+    ArrayList<String> l= getStats();
+    String f="";
+    for(String i:l){
+    f=f+"\n"+i;
+    }
+    alert.setContentText(f);
     if(alert.showAndWait().get() == ButtonType.OK){
         alert.close();
         }      
@@ -183,15 +209,73 @@ public class SecondaryController implements Initializable {
 
     
     @FXML
-    private void addToList(){
-    String f= TextInput.getText();
+    private void addWord(){
+    String f= TextInput.getText();   
+    if(!Tree.search(f)){
     Tree.insert(f);
+    String fM= MeaningInput.getText();
+    SigP.put(f, fM);
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Sucess");
+    alert.setContentText("Word Added");
+    if(alert.showAndWait().get() == ButtonType.OK){
+        alert.close();
+        } 
+    }
+    else{
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Already in Trie");
+    alert.setContentText("The Word You tried to add was already in the Trie");
+    if(alert.showAndWait().get() == ButtonType.OK){
+        alert.close();
+        }      
+    }
+    }
+    
+    @FXML
+    private void DeleteWord(){
+    String f= TextInput.getText();
+    if(Tree.search(f)){
+    //Trie.clear(f);
+    SigP.remove(f);
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Delete!");
+    alert.setContentText("Word has been deleted succesfully");
+    if(alert.showAndWait().get() == ButtonType.OK){
+        alert.close();
+        }      
+    }
+    else{
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Not Found!");
+    alert.setContentText("The Word You tried to search is not in the Trie");
+    if(alert.showAndWait().get() == ButtonType.OK){
+        alert.close();
+        } 
+    }
     }
     
     @FXML
     private void getMeaning(){
+    String f= TextInput.getText();   
+    if(Tree.search(f)){
+    String fs = SigP.get(f);
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Meaning!");
+    alert.setContentText(fs);
+    if(alert.showAndWait().get() == ButtonType.OK){
+        alert.close();
+        }      
+    }
+    else{
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Not Found!");
+    alert.setContentText("The Word You tried to search is not in the Trie");
+    if(alert.showAndWait().get() == ButtonType.OK){
+        alert.close();
+        }  
     
-    
+    }
     }
     
     @FXML
