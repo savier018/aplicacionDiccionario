@@ -49,11 +49,7 @@ public class PrimaryController implements Initializable{
         selectedFile = filechooser.showOpenDialog(stage);
         if(selectedFile!= null){
             Title.setText(selectedFile.getName());
-            try{
-               registrarTxt();
-            } catch (Exception e){
-                System.out.println("No se pudo cargar el diccionario");
-                }  
+            registrarTxt();  
         } else{
             System.out.println("No file has been selected");
             }
@@ -77,7 +73,7 @@ public class PrimaryController implements Initializable{
      public void registrarTxt(){
         
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(String.format("src/main/resources/text/%s.txt",Title.getText())));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(String.format("src/main/resources/text/%s",Title.getText())));
             BufferedReader br = new BufferedReader(new FileReader(selectedFile.getAbsoluteFile()));
             bw.write(br.readLine());
             String line;
