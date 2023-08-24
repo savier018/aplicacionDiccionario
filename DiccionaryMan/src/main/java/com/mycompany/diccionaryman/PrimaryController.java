@@ -36,7 +36,7 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private void returndefault(){
-        Title.setText("Default");
+        Title.setText("palabras");
     }
     
     @FXML
@@ -62,11 +62,11 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private void switchToSecondary() throws IOException {
-        if(!Title.getText().equals("Default")){
+        if(!Title.getText().equals("palabras")){
             SecondaryController.setDiccionaryTitle(Title.getText());
             //Cambiar para el diccionario nuevo
         } else{
-            SecondaryController.setDiccionaryTitle("Default");
+            SecondaryController.setDiccionaryTitle("palabras");
         }
         seguirbtn.getScene().getWindow().setWidth(400);
         seguirbtn.getScene().getWindow().setHeight(350);

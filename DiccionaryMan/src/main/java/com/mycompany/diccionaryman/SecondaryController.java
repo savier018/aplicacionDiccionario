@@ -4,6 +4,8 @@ import TDA.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -219,8 +221,17 @@ public class SecondaryController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Desea descargar el archivo?");
         if(alert.showAndWait().get() == ButtonType.OK){
+            File file = new File(String.format("src/main/resources/text/%s.txt",DiccionaryTitle.getText()));
             String home = System.getProperty("user.home");
-            File file = new File(home+"Downloads"+DiccionaryString+".txt");
+            File newfile = new File(home+"\\Downloads\\"+DiccionaryString+".txt");
+            try{
+                Files.copy(file.toPath(),newfile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Archivo descargado");
+                alert2.showAndWait();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
             
         }    
         alert.close();

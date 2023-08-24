@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="199.0" prefWidth="357.0" styleClass="mainFxmlClass" stylesheets="@../../../styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.diccionaryman.PrimaryController">
    <children>
-      <Label fx:id="Title" layoutX="140.0" layoutY="46.0" styleClass="Label" text="Default" />
+      <Label fx:id="Title" layoutX="140.0" layoutY="46.0" styleClass="Label" text="palabras" />
       <Button fx:id="InsertButton" layoutX="89.0" layoutY="75.0" onAction="#insertarTxt" styleClass="Button" text="Click here to Insert Dicc" />
       <Button fx:id="seguirbtn" layoutX="262.0" layoutY="136.0" onAction="#switchToSecondary" styleClass="Button">
          <graphic>
