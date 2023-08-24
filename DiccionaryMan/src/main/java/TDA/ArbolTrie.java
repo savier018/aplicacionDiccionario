@@ -1,8 +1,14 @@
 package TDA;
 
 import com.mycompany.diccionaryman.Palabra;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ArbolTrie {
     private TrieNode root;
@@ -14,6 +20,63 @@ public class ArbolTrie {
     public boolean isEmpty(){
         return this.root.getChildren().isEmpty();
     }   
+    
+    public void delete(String word) {
+    if (word == null || word.isEmpty()) {
+        throw new IllegalArgumentException("La palabra no puede ser nula o vacía");
+    }    
+        boolean deletedFromTrie = deleteFromTrie(root, word, 0);
+        if (!deletedFromTrie) {
+            updateTextFile(word);
+        }
+    }
+
+    private boolean deleteFromTrie(TrieNode node, String word, int profundidadPalabra) {
+        if (node == null) {
+            return false;
+        }
+
+        if (profundidadPalabra == word.length()) {
+            if (!node.isEndOfWord()) {   
+                return false;
+            }
+
+            node.setIsEndOfWord(false);
+            
+            return node.getChildren().isEmpty();
+        }
+
+        char caracter = word.charAt(profundidadPalabra);
+        TrieNode nodoHijo = node.getChildren().get(caracter);
+
+        if (nodoHijo == null) {
+            return false;
+        }
+
+        boolean eliminarNodo = deleteFromTrie(nodoHijo, word, profundidadPalabra + 1);
+
+        if (eliminarNodo) {
+            node.getChildren().remove(caracter);
+            return !node.isEndOfWord() && node.getChildren().isEmpty();
+        }
+
+        return false;
+    }
+    
+    private void updateTextFile(String wordToDelete) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\User\\Documents\\aplicacionDiccionario\\DiccionaryMan\\src\\main\\resources\\text\\palabras.txt"), StandardCharsets.UTF_8);
+
+            List<String> newLines = lines.stream()
+                .filter(line -> !line.startsWith(wordToDelete + "-"))
+                .collect(Collectors.toList());
+
+            Files.write(Paths.get("C:\\Users\\User\\Documents\\aplicacionDiccionario\\DiccionaryMan\\src\\main\\resources\\text\\palabras.txt"), newLines, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     
     public void insert(String word) {
         if (word == null || word.isEmpty()) {
