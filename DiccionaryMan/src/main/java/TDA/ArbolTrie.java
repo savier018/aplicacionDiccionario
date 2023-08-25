@@ -127,18 +127,6 @@ public class ArbolTrie {
         }
     }
     
-    public boolean clearWord(String word){
-    if (root == null){ 
-        return false;
-    }
-    else{
-    TrieNode current = root;
-    
-    
-    return true;
-    }
-    }
-    
     public int getHeight(){          
     return getHeightR(root);
     }

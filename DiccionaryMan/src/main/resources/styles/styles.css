@@ -17,8 +17,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     
 }
 
+.GameClass{
+   -fx-background-image: url("b2.jpg");
+   -fx-background-size: 100% 100%;
+   -fx-background-repeat: no-repeat;
+   -fx-background-position: center center;
+}
+
+
 .Button{
   -fx-background-color: #2a135b;
+  -fx-display: flex;
+  -fx-align-content: center;
+  -fx-text-align: center;
+  -fx-text-fill: white;
+  -fx-font-family: 'Lucida Console', cursive;
+}
+
+.GameButton{
+  -fx-background-color: #3333ff;
   -fx-display: flex;
   -fx-align-content: center;
   -fx-text-align: center;
@@ -30,3 +47,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-font-family: 'Lucida Console', cursive;
     -fx-text-fill: white;
 }
+
