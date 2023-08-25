@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="GameClass" stylesheets="@../../../styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.diccionaryman.WordGame">
+   <children>
+      <Label fx:id="Title" alignment="CENTER" layoutX="159.0" layoutY="14.0" prefHeight="63.0" prefWidth="287.0" styleClass="Label" text="GUESS THE WORD!" />
+      <HBox fx:id="WordContainer" layoutX="90.0" layoutY="77.0" prefHeight="75.0" prefWidth="420.0" />
+      <VBox layoutX="149.0" layoutY="189.0" prefHeight="50.0" prefWidth="304.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="309.0" styleClass="Label" text="Type your guess!" />
+            <TextField fx:id="GuessInput" prefHeight="25.0" prefWidth="172.0" />
+         </children>
+      </VBox>
+      <Label fx:id="Lives" layoutX="512.0" layoutY="22.0" styleClass="Label" text="Lives: 3" />
+      <Label fx:id="TimerLegend" layoutX="512.0" layoutY="46.0" prefHeight="17.0" prefWidth="39.0" styleClass="Label" text="Time:" />
+      <Label fx:id="Timer" layoutX="512.0" layoutY="69.0" prefHeight="17.0" prefWidth="71.0" styleClass="Label" text="00:00:00" />
+      <Button fx:id="EndGame" layoutX="248.0" layoutY="264.0" mnemonicParsing="false" onAction="#EndGame" prefHeight="25.0" prefWidth="110.0" styleClass="GameButton" text="EndGame" />
+      <Button fx:id="Confirm" alignment="CENTER" contentDisplay="CENTER" layoutX="248.0" layoutY="239.0" mnemonicParsing="false" onAction="#confirmAnswer" prefHeight="25.0" prefWidth="110.0" styleClass="GameButton" text="ConfirmGuess" />
+   </children>
+</AnchorPane>

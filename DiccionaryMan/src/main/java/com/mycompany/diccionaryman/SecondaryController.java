@@ -53,6 +53,7 @@ public class SecondaryController implements Initializable {
     private static Map<String,String> SigP = new HashMap();
     private static ArbolTrie Tree;    
     private AutoCompletionBinding auto;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DiccionaryTitle.setText(DiccionaryString);
@@ -67,12 +68,6 @@ public class SecondaryController implements Initializable {
             SigP.put(p.getTermino(),p.getDefinicion());
         }  
     }
-    
-//Cambie el boton descargar, puse su metodo en el boton Save. Ya que ese era su trabajo.
-    /*
-    Implementar codigo para que se agrege al trie la palabra, para que busque su significado,borrar la palabra del trie, obtener stats del Trie.
-    Poner Gif, background y hacer bonito el css.
-    */
     
     private ArrayList<String> getStats(){
     ArrayList<String> allStats = new ArrayList();
@@ -107,6 +102,7 @@ public class SecondaryController implements Initializable {
         Mode.setText("Mode: Search");
         TextFieldContainer.getChildren().clear();
         SearchMeaning = new Button("Get Meaning");
+        SearchMeaning.setStyle("-fx-background-color: #2a135b;-fx-display: flex;\n -fx-align-content: center;-fx-text-align: center; -fx-text-fill: white;-fx-font-family: 'Lucida Console', cursive;");
         SearchMeaning.setOnMouseClicked(new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent t) {
@@ -157,6 +153,7 @@ public class SecondaryController implements Initializable {
         Mode.setText("Mode: Delete");
         TextFieldContainer.getChildren().clear();
         Confirm = new Button("Confirm");
+        Confirm.setStyle("-fx-background-color: #2a135b;-fx-display: flex;\n -fx-align-content: center;-fx-text-align: center; -fx-text-fill: white;-fx-font-family: 'Lucida Console', cursive;");
         TextFieldContainer.getChildren().addAll(LegendText,TextInput,Confirm);
         auto = TextFields.bindAutoCompletion(TextInput, listaPalabras);
         TextInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -198,6 +195,7 @@ public class SecondaryController implements Initializable {
         Mode.setText("Mode: Add");
         TextFieldContainer.getChildren().clear();
         AddtoList = new Button("Add to List");
+        AddtoList.setStyle("-fx-background-color: #2a135b;-fx-display: flex;\n -fx-align-content: center;-fx-text-align: center; -fx-text-fill: white;-fx-font-family: 'Lucida Console', cursive;");
         AddtoList.setOnMouseClicked(new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent t) {
@@ -245,8 +243,10 @@ public class SecondaryController implements Initializable {
     }
     
     @FXML
-    private void changeModeGame(){
-    
+    private void changeModeGame()throws IOException{
+        Game.getScene().getWindow().setWidth(600);
+        Game.getScene().getWindow().setHeight(400);
+        App.setRoot("Game");
     }
     
 
@@ -329,6 +329,14 @@ public class SecondaryController implements Initializable {
     public static void setDiccionaryTitle(String title){
         DiccionaryString = title;
     }
+    
+    //JUEGO ADIVINAR PALABRA DEL DICCIONARIO
+    //Agarro una palabra del arbol y le digo al usuario que la adivine.
+    //le doy una letra al azar para que se guie
+    // 3 intentos.
+
+    
+    
     
     
 }
