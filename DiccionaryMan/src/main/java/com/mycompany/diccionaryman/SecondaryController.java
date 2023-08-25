@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.stage.FileChooser;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
@@ -55,11 +57,13 @@ public class SecondaryController implements Initializable {
     private static Map<String,String> SigP = new HashMap();
     private static ArbolTrie Tree;    
     private AutoCompletionBinding auto;
+    private AudioClip song;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DiccionaryTitle.setText(DiccionaryString);
         loadTree();
+        playSongC();
     }
     
     private void loadTree(){
@@ -70,6 +74,17 @@ public class SecondaryController implements Initializable {
             SigP.put(p.getTermino(),p.getDefinicion());
         }  
     }
+    
+     public void playSongC(){ 
+        Platform.runLater(new Runnable(){
+        @Override
+        public void run(){
+        song = new AudioClip(getClass().getResource("/Music/MainMenuTheme.mp3").toExternalForm());   
+        song.setCycleCount(AudioClip.INDEFINITE);
+        song.play(); 
+                }
+       });
+       }
     
     private ArrayList<String> getStats(){
     ArrayList<String> allStats = new ArrayList();
@@ -258,6 +273,7 @@ public class SecondaryController implements Initializable {
         Game.getScene().getWindow().setWidth(600);
         Game.getScene().getWindow().setHeight(400);
         App.setRoot("Game");
+        song.stop();
     }
     
 
