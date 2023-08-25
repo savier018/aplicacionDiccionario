@@ -48,7 +48,8 @@ public class PrimaryController implements Initializable{
         Stage stage = (Stage) InsertButton.getScene().getWindow();
         selectedFile = filechooser.showOpenDialog(stage);
         if(selectedFile!= null){
-            Title.setText(selectedFile.getName());
+            String titulo = selectedFile.getName().replace(".txt","");
+            Title.setText(titulo);
             registrarTxt();  
         } else{
             System.out.println("No file has been selected");
@@ -60,7 +61,7 @@ public class PrimaryController implements Initializable{
     private void switchToSecondary() throws IOException {
         if(!Title.getText().equals("palabras")){
             SecondaryController.setDiccionaryTitle(Title.getText());
-            //Cambiar para el diccionario nuevo
+            
         } else{
             SecondaryController.setDiccionaryTitle("palabras");
         }
@@ -73,12 +74,12 @@ public class PrimaryController implements Initializable{
      public void registrarTxt(){
         
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(String.format("src/main/resources/text/%s",Title.getText())));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(String.format("src/main/resources/text/%s.txt",Title.getText())));
             BufferedReader br = new BufferedReader(new FileReader(selectedFile.getAbsoluteFile()));
-            bw.write(br.readLine());
             String line;
             while((line = br.readLine()) != null){
                 bw.write(line);
+                bw.write(System.lineSeparator());
             }   
             bw.close();
             br.close();

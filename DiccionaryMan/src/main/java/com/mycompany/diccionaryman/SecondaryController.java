@@ -62,10 +62,22 @@ public class SecondaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DiccionaryTitle.setText(DiccionaryString);
-        loadTree();
+        if(DiccionaryString.equals("palabras")){
+            loadTree();    
+        } else{
+            loadTree(DiccionaryString);
+        }
         playSongC();
     }
     
+    private void loadTree(String texto){
+        listaPalabras = Palabra.cargarPalabras(texto);
+        Tree= new ArbolTrie();
+        for(Palabra p:listaPalabras){
+            Tree.insert(p.getTermino());
+            SigP.put(p.getTermino(),p.getDefinicion());
+        } 
+    }
     private void loadTree(){
         listaPalabras = Palabra.cargarPalabras();
         Tree= new ArbolTrie();
@@ -240,7 +252,8 @@ public class SecondaryController implements Initializable {
             try{
                 Files.copy(file.toPath(),newfile.toPath(),StandardCopyOption.REPLACE_EXISTING);
                 Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Archivo descargado");
+                alert2.setTitle("Archivo descargado");
+                alert2.setContentText("Se descargo su archivo en la parte de descargas!");
                 alert2.showAndWait();
             }catch(IOException e){
                 e.printStackTrace();
