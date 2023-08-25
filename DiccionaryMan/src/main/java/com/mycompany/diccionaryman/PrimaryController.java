@@ -36,7 +36,7 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private void returndefault(){
-        Title.setText("Default");
+        Title.setText("palabras");
     }
     
     @FXML
@@ -49,11 +49,7 @@ public class PrimaryController implements Initializable{
         selectedFile = filechooser.showOpenDialog(stage);
         if(selectedFile!= null){
             Title.setText(selectedFile.getName());
-            try{
-               registrarTxt();
-            } catch (Exception e){
-                System.out.println("No se pudo cargar el diccionario");
-                }  
+            registrarTxt();  
         } else{
             System.out.println("No file has been selected");
             }
@@ -62,11 +58,11 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private void switchToSecondary() throws IOException {
-        if(!Title.getText().equals("Default")){
+        if(!Title.getText().equals("palabras")){
             SecondaryController.setDiccionaryTitle(Title.getText());
             //Cambiar para el diccionario nuevo
         } else{
-            SecondaryController.setDiccionaryTitle("Default");
+            SecondaryController.setDiccionaryTitle("palabras");
         }
         seguirbtn.getScene().getWindow().setWidth(400);
         seguirbtn.getScene().getWindow().setHeight(350);
@@ -77,7 +73,7 @@ public class PrimaryController implements Initializable{
      public void registrarTxt(){
         
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(String.format("src/main/resources/text/%s.txt",Title.getText())));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(String.format("src/main/resources/text/%s",Title.getText())));
             BufferedReader br = new BufferedReader(new FileReader(selectedFile.getAbsoluteFile()));
             bw.write(br.readLine());
             String line;
