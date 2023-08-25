@@ -12,8 +12,6 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -57,12 +56,24 @@ public class WordGame implements Initializable {
     private Label Timer,TimerLegend,Lives,LegendText,Title;
     private Timer GameTimer;
     private long min, sec, hr,TotalSec=0;
+    private AudioClip song;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupGame();
         TimerStart();
+        playSongC();
     }
    
+        public void playSongC(){ 
+        Platform.runLater(new Runnable(){
+        @Override
+        public void run(){
+        song = new AudioClip(getClass().getResource("/Music/MCTheme.mp3").toExternalForm());   
+        song.setCycleCount(AudioClip.INDEFINITE);
+        song.play(); 
+                }
+       });
+       }
     
             
     public void convertTime(){
@@ -189,7 +200,7 @@ public class WordGame implements Initializable {
     
     
     private void WIN() throws IOException{
-    Alert alert = new Alert(Alert.AlertType.ERROR);
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Winner Winner Chicken Dinner!");
     GameTimer.cancel();
     int Score = lives*(int)TotalSec*wordtoguess.length();  
@@ -197,6 +208,7 @@ public class WordGame implements Initializable {
     if(alert.showAndWait().get() == ButtonType.OK){
         alert.close();
         switchToSecondary();
+        song.stop();
     }
     }
     
@@ -208,6 +220,7 @@ public class WordGame implements Initializable {
     if(alert.showAndWait().get() == ButtonType.OK){
         alert.close();
         switchToSecondary();
+        song.stop();
     }
     }
     
